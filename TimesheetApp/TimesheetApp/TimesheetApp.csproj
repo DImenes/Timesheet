@@ -44,6 +44,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -188,6 +190,33 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\DbErm.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbErm.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DbErm.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbErm.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DbErm.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbErm.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TS_Client.cs">
+      <DependentUpon>DbErm.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TS_HoursDay.cs">
+      <DependentUpon>DbErm.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TS_HoursKind.cs">
+      <DependentUpon>DbErm.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TS_User.cs">
+      <DependentUpon>DbErm.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -247,6 +276,23 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <EntityDeploy Include="Models\DbErm.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DbErm.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DbErm.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DbErm.edmx</DependentUpon>
+      <LastGenOutput>DbErm.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\DbErm.edmx.diagram">
+      <DependentUpon>DbErm.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\DbErm.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DbErm.edmx</DependentUpon>
+      <LastGenOutput>DbErm.cs</LastGenOutput>
+    </Content>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -307,6 +353,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

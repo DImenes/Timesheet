@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TimesheetModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="TimesheetModelStoreContainer">
+          <EntitySet Name="TS_Client" EntityType="TimesheetModel.Store.TS_Client" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TS_HoursDay" EntityType="TimesheetModel.Store.TS_HoursDay" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TS_HoursKind" EntityType="TimesheetModel.Store.TS_HoursKind" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TS_User" EntityType="TimesheetModel.Store.TS_User" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK__TS_HoursD__TS_Cl__173876EA" Association="TimesheetModel.Store.FK__TS_HoursD__TS_Cl__173876EA">
+            <End Role="TS_Client" EntitySet="TS_Client" />
+            <End Role="TS_HoursDay" EntitySet="TS_HoursDay" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TS_HoursD__TS_Ho__182C9B23" Association="TimesheetModel.Store.FK__TS_HoursD__TS_Ho__182C9B23">
+            <End Role="TS_HoursKind" EntitySet="TS_HoursKind" />
+            <End Role="TS_HoursDay" EntitySet="TS_HoursDay" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TS_HoursD__TS_Us__164452B1" Association="TimesheetModel.Store.FK__TS_HoursD__TS_Us__164452B1">
+            <End Role="TS_User" EntitySet="TS_User" />
+            <End Role="TS_HoursDay" EntitySet="TS_HoursDay" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="TS_Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="City" Type="varchar" MaxLength="100" />
+          <Property Name="Address" Type="varchar" MaxLength="100" />
+          <Property Name="Country" Type="char" MaxLength="40" />
+          <Property Name="KmToOffice" Type="int" />
+          <Property Name="AppOwner" Type="bit" />
+        </EntityType>
+        <EntityType Name="TS_HoursDay">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TS_HoursKind_Id" Type="int" Nullable="false" />
+          <Property Name="TS_Client_Id" Type="int" Nullable="false" />
+          <Property Name="TS_User_Id" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Hours" Type="decimal" Nullable="false" Precision="7" Scale="2" />
+          <Property Name="Description" Type="text" />
+        </EntityType>
+        <EntityType Name="TS_HoursKind">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="TS_User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Pass" Type="varchar" MaxLength="100" />
+          <Property Name="Telephone" Type="char" MaxLength="15" />
+          <Property Name="Mobile" Type="char" MaxLength="15" />
+          <Property Name="AccessType" Type="int" />
+          <Property Name="HoursDay" Type="int" />
+        </EntityType>
+        <Association Name="FK__TS_HoursD__TS_Cl__173876EA">
+          <End Role="TS_Client" Type="TimesheetModel.Store.TS_Client" Multiplicity="1" />
+          <End Role="TS_HoursDay" Type="TimesheetModel.Store.TS_HoursDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TS_Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TS_HoursDay">
+              <PropertyRef Name="TS_Client_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TS_HoursD__TS_Ho__182C9B23">
+          <End Role="TS_HoursKind" Type="TimesheetModel.Store.TS_HoursKind" Multiplicity="1" />
+          <End Role="TS_HoursDay" Type="TimesheetModel.Store.TS_HoursDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TS_HoursKind">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TS_HoursDay">
+              <PropertyRef Name="TS_HoursKind_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TS_HoursD__TS_Us__164452B1">
+          <End Role="TS_User" Type="TimesheetModel.Store.TS_User" Multiplicity="1" />
+          <End Role="TS_HoursDay" Type="TimesheetModel.Store.TS_HoursDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TS_User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TS_HoursDay">
+              <PropertyRef Name="TS_User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TimesheetModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TimesheetEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="TS_Client" EntityType="TimesheetModel.TS_Client" />
+          <EntitySet Name="TS_HoursDay" EntityType="TimesheetModel.TS_HoursDay" />
+          <EntitySet Name="TS_HoursKind" EntityType="TimesheetModel.TS_HoursKind" />
+          <EntitySet Name="TS_User" EntityType="TimesheetModel.TS_User" />
+          <AssociationSet Name="FK__TS_HoursD__TS_Cl__173876EA" Association="TimesheetModel.FK__TS_HoursD__TS_Cl__173876EA">
+            <End Role="TS_Client" EntitySet="TS_Client" />
+            <End Role="TS_HoursDay" EntitySet="TS_HoursDay" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TS_HoursD__TS_Ho__182C9B23" Association="TimesheetModel.FK__TS_HoursD__TS_Ho__182C9B23">
+            <End Role="TS_HoursKind" EntitySet="TS_HoursKind" />
+            <End Role="TS_HoursDay" EntitySet="TS_HoursDay" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TS_HoursD__TS_Us__164452B1" Association="TimesheetModel.FK__TS_HoursD__TS_Us__164452B1">
+            <End Role="TS_User" EntitySet="TS_User" />
+            <End Role="TS_HoursDay" EntitySet="TS_HoursDay" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="TS_Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="City" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="Address" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="Country" Type="String" MaxLength="40" Unicode="false" FixedLength="true" />
+          <Property Name="KmToOffice" Type="Int32" />
+          <Property Name="AppOwner" Type="Boolean" />
+          <NavigationProperty Name="TS_HoursDay" Relationship="TimesheetModel.FK__TS_HoursD__TS_Cl__173876EA" FromRole="TS_Client" ToRole="TS_HoursDay" />
+        </EntityType>
+        <EntityType Name="TS_HoursDay">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="TS_HoursKind_Id" Type="Int32" Nullable="false" />
+          <Property Name="TS_Client_Id" Type="Int32" Nullable="false" />
+          <Property Name="TS_User_Id" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Hours" Type="Decimal" Nullable="false" Precision="7" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="TS_Client" Relationship="TimesheetModel.FK__TS_HoursD__TS_Cl__173876EA" FromRole="TS_HoursDay" ToRole="TS_Client" />
+          <NavigationProperty Name="TS_HoursKind" Relationship="TimesheetModel.FK__TS_HoursD__TS_Ho__182C9B23" FromRole="TS_HoursDay" ToRole="TS_HoursKind" />
+          <NavigationProperty Name="TS_User" Relationship="TimesheetModel.FK__TS_HoursD__TS_Us__164452B1" FromRole="TS_HoursDay" ToRole="TS_User" />
+        </EntityType>
+        <EntityType Name="TS_HoursKind">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="TS_HoursDay" Relationship="TimesheetModel.FK__TS_HoursD__TS_Ho__182C9B23" FromRole="TS_HoursKind" ToRole="TS_HoursDay" />
+        </EntityType>
+        <EntityType Name="TS_User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="Pass" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="Telephone" Type="String" MaxLength="15" Unicode="false" FixedLength="true" />
+          <Property Name="Mobile" Type="String" MaxLength="15" Unicode="false" FixedLength="true" />
+          <Property Name="AccessType" Type="Int32" />
+          <Property Name="HoursDay" Type="Int32" />
+          <NavigationProperty Name="TS_HoursDay" Relationship="TimesheetModel.FK__TS_HoursD__TS_Us__164452B1" FromRole="TS_User" ToRole="TS_HoursDay" />
+        </EntityType>
+        <Association Name="FK__TS_HoursD__TS_Cl__173876EA">
+          <End Role="TS_Client" Type="TimesheetModel.TS_Client" Multiplicity="1" />
+          <End Role="TS_HoursDay" Type="TimesheetModel.TS_HoursDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TS_Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TS_HoursDay">
+              <PropertyRef Name="TS_Client_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TS_HoursD__TS_Ho__182C9B23">
+          <End Role="TS_HoursKind" Type="TimesheetModel.TS_HoursKind" Multiplicity="1" />
+          <End Role="TS_HoursDay" Type="TimesheetModel.TS_HoursDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TS_HoursKind">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TS_HoursDay">
+              <PropertyRef Name="TS_HoursKind_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TS_HoursD__TS_Us__164452B1">
+          <End Role="TS_User" Type="TimesheetModel.TS_User" Multiplicity="1" />
+          <End Role="TS_HoursDay" Type="TimesheetModel.TS_HoursDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TS_User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TS_HoursDay">
+              <PropertyRef Name="TS_User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TimesheetModelStoreContainer" CdmEntityContainer="TimesheetEntities">
+          <EntitySetMapping Name="TS_Client">
+            <EntityTypeMapping TypeName="TimesheetModel.TS_Client">
+              <MappingFragment StoreEntitySet="TS_Client">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="KmToOffice" ColumnName="KmToOffice" />
+                <ScalarProperty Name="AppOwner" ColumnName="AppOwner" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TS_HoursDay">
+            <EntityTypeMapping TypeName="TimesheetModel.TS_HoursDay">
+              <MappingFragment StoreEntitySet="TS_HoursDay">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TS_HoursKind_Id" ColumnName="TS_HoursKind_Id" />
+                <ScalarProperty Name="TS_Client_Id" ColumnName="TS_Client_Id" />
+                <ScalarProperty Name="TS_User_Id" ColumnName="TS_User_Id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Hours" ColumnName="Hours" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TS_HoursKind">
+            <EntityTypeMapping TypeName="TimesheetModel.TS_HoursKind">
+              <MappingFragment StoreEntitySet="TS_HoursKind">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TS_User">
+            <EntityTypeMapping TypeName="TimesheetModel.TS_User">
+              <MappingFragment StoreEntitySet="TS_User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="AccessType" ColumnName="AccessType" />
+                <ScalarProperty Name="HoursDay" ColumnName="HoursDay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
