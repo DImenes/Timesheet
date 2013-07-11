@@ -12,24 +12,21 @@ namespace TimesheetApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TS_User
+    public partial class TS_Project
     {
-        public TS_User()
+        public TS_Project()
         {
-            this.TS_HoursDay = new HashSet<TS_HoursDay>();
             this.TS_UserProject = new HashSet<TS_UserProject>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Email { get; set; }
-        public string Pass { get; set; }
-        public string Telephone { get; set; }
-        public string Mobile { get; set; }
-        public Nullable<int> AccessType { get; set; }
-        public Nullable<int> HoursDay { get; set; }
+        public string Description { get; set; }
+        public int Client { get; set; }
+        public System.DateTime StartDate { get; set; }
+        public System.DateTime EndDate { get; set; }
     
-        public virtual ICollection<TS_HoursDay> TS_HoursDay { get; set; }
+        public virtual TS_Client TS_Client { get; set; }
         public virtual ICollection<TS_UserProject> TS_UserProject { get; set; }
     }
 }

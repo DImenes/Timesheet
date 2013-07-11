@@ -190,32 +190,38 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\DbErm.Context.cs">
+    <Compile Include="Models\ERM.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DbErm.Context.tt</DependentUpon>
+      <DependentUpon>ERM.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DbErm.cs">
+    <Compile Include="Models\ERM.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DbErm.tt</DependentUpon>
+      <DependentUpon>ERM.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DbErm.Designer.cs">
+    <Compile Include="Models\ERM.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DbErm.edmx</DependentUpon>
+      <DependentUpon>ERM.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\TS_Client.cs">
-      <DependentUpon>DbErm.tt</DependentUpon>
+      <DependentUpon>ERM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TS_HoursDay.cs">
-      <DependentUpon>DbErm.tt</DependentUpon>
+      <DependentUpon>ERM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TS_HoursKind.cs">
-      <DependentUpon>DbErm.tt</DependentUpon>
+      <DependentUpon>ERM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TS_Project.cs">
+      <DependentUpon>ERM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TS_User.cs">
-      <DependentUpon>DbErm.tt</DependentUpon>
+      <DependentUpon>ERM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TS_UserProject.cs">
+      <DependentUpon>ERM.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -276,22 +282,22 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <EntityDeploy Include="Models\DbErm.edmx">
+    <EntityDeploy Include="Models\ERM.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DbErm.Designer.cs</LastGenOutput>
+      <LastGenOutput>ERM.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\DbErm.Context.tt">
+    <Content Include="Models\ERM.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DbErm.edmx</DependentUpon>
-      <LastGenOutput>DbErm.Context.cs</LastGenOutput>
+      <DependentUpon>ERM.edmx</DependentUpon>
+      <LastGenOutput>ERM.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\DbErm.edmx.diagram">
-      <DependentUpon>DbErm.edmx</DependentUpon>
+    <Content Include="Models\ERM.edmx.diagram">
+      <DependentUpon>ERM.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\DbErm.tt">
+    <Content Include="Models\ERM.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DbErm.edmx</DependentUpon>
-      <LastGenOutput>DbErm.cs</LastGenOutput>
+      <DependentUpon>ERM.edmx</DependentUpon>
+      <LastGenOutput>ERM.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />

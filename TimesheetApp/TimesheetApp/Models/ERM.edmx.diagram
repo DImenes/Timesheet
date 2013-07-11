@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f08796a30f0f4fb58b164c1edd0082a5" Name="Diagram1">
+        <EntityTypeShape EntityType="TimesheetModel.TS_Client" Width="1.5" PointX="5.375" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimesheetModel.TS_HoursDay" Width="1.5" PointX="4.375" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimesheetModel.TS_HoursKind" Width="1.5" PointX="7.125" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimesheetModel.TS_Project" Width="1.5" PointX="3.125" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimesheetModel.TS_User" Width="1.5" PointX="0.75" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimesheetModel.TS_UserProject" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <AssociationConnector Association="TimesheetModel.FK__TS_HoursD__TS_Cl__173876EA" ManuallyRouted="false" />
+        <AssociationConnector Association="TimesheetModel.FK_TS_Project_TS_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="TimesheetModel.FK__TS_HoursD__TS_Ho__182C9B23" ManuallyRouted="false" />
+        <AssociationConnector Association="TimesheetModel.FK__TS_HoursD__TS_Us__164452B1" ManuallyRouted="false" />
+        <AssociationConnector Association="TimesheetModel.FK_TS_UserProject_TS_Project" ManuallyRouted="false" />
+        <AssociationConnector Association="TimesheetModel.FK_TS_UserProject_TS_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

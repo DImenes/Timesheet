@@ -9,7 +9,9 @@
           <EntitySet Name="TS_Client" EntityType="TimesheetModel.Store.TS_Client" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="TS_HoursDay" EntityType="TimesheetModel.Store.TS_HoursDay" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="TS_HoursKind" EntityType="TimesheetModel.Store.TS_HoursKind" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TS_Project" EntityType="TimesheetModel.Store.TS_Project" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="TS_User" EntityType="TimesheetModel.Store.TS_User" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TS_UserProject" EntityType="TimesheetModel.Store.TS_UserProject" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK__TS_HoursD__TS_Cl__173876EA" Association="TimesheetModel.Store.FK__TS_HoursD__TS_Cl__173876EA">
             <End Role="TS_Client" EntitySet="TS_Client" />
             <End Role="TS_HoursDay" EntitySet="TS_HoursDay" />
@@ -21,6 +23,18 @@
           <AssociationSet Name="FK__TS_HoursD__TS_Us__164452B1" Association="TimesheetModel.Store.FK__TS_HoursD__TS_Us__164452B1">
             <End Role="TS_User" EntitySet="TS_User" />
             <End Role="TS_HoursDay" EntitySet="TS_HoursDay" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TS_Project_TS_Client" Association="TimesheetModel.Store.FK_TS_Project_TS_Client">
+            <End Role="TS_Client" EntitySet="TS_Client" />
+            <End Role="TS_Project" EntitySet="TS_Project" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TS_UserProject_TS_Project" Association="TimesheetModel.Store.FK_TS_UserProject_TS_Project">
+            <End Role="TS_Project" EntitySet="TS_Project" />
+            <End Role="TS_UserProject" EntitySet="TS_UserProject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TS_UserProject_TS_User" Association="TimesheetModel.Store.FK_TS_UserProject_TS_User">
+            <End Role="TS_User" EntitySet="TS_User" />
+            <End Role="TS_UserProject" EntitySet="TS_UserProject" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="TS_Client">
@@ -54,11 +68,22 @@
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="varchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="TS_Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="70" />
+          <Property Name="Description" Type="text" />
+          <Property Name="Client" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="TS_User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="varchar" MaxLength="100" />
           <Property Name="Email" Type="varchar" MaxLength="100" />
           <Property Name="Pass" Type="varchar" MaxLength="100" />
@@ -66,6 +91,16 @@
           <Property Name="Mobile" Type="char" MaxLength="15" />
           <Property Name="AccessType" Type="int" />
           <Property Name="HoursDay" Type="int" />
+        </EntityType>
+        <EntityType Name="TS_UserProject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Project" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK__TS_HoursD__TS_Cl__173876EA">
           <End Role="TS_Client" Type="TimesheetModel.Store.TS_Client" Multiplicity="1" />
@@ -103,6 +138,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TS_Project_TS_Client">
+          <End Role="TS_Client" Type="TimesheetModel.Store.TS_Client" Multiplicity="1" />
+          <End Role="TS_Project" Type="TimesheetModel.Store.TS_Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TS_Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TS_Project">
+              <PropertyRef Name="Client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TS_UserProject_TS_Project">
+          <End Role="TS_Project" Type="TimesheetModel.Store.TS_Project" Multiplicity="1" />
+          <End Role="TS_UserProject" Type="TimesheetModel.Store.TS_UserProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TS_Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TS_UserProject">
+              <PropertyRef Name="Project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TS_UserProject_TS_User">
+          <End Role="TS_User" Type="TimesheetModel.Store.TS_User" Multiplicity="1" />
+          <End Role="TS_UserProject" Type="TimesheetModel.Store.TS_UserProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TS_User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TS_UserProject">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
@@ -112,10 +183,16 @@
           <EntitySet Name="TS_Client" EntityType="TimesheetModel.TS_Client" />
           <EntitySet Name="TS_HoursDay" EntityType="TimesheetModel.TS_HoursDay" />
           <EntitySet Name="TS_HoursKind" EntityType="TimesheetModel.TS_HoursKind" />
+          <EntitySet Name="TS_Project" EntityType="TimesheetModel.TS_Project" />
           <EntitySet Name="TS_User" EntityType="TimesheetModel.TS_User" />
+          <EntitySet Name="TS_UserProject" EntityType="TimesheetModel.TS_UserProject" />
           <AssociationSet Name="FK__TS_HoursD__TS_Cl__173876EA" Association="TimesheetModel.FK__TS_HoursD__TS_Cl__173876EA">
             <End Role="TS_Client" EntitySet="TS_Client" />
             <End Role="TS_HoursDay" EntitySet="TS_HoursDay" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TS_Project_TS_Client" Association="TimesheetModel.FK_TS_Project_TS_Client">
+            <End Role="TS_Client" EntitySet="TS_Client" />
+            <End Role="TS_Project" EntitySet="TS_Project" />
           </AssociationSet>
           <AssociationSet Name="FK__TS_HoursD__TS_Ho__182C9B23" Association="TimesheetModel.FK__TS_HoursD__TS_Ho__182C9B23">
             <End Role="TS_HoursKind" EntitySet="TS_HoursKind" />
@@ -124,6 +201,14 @@
           <AssociationSet Name="FK__TS_HoursD__TS_Us__164452B1" Association="TimesheetModel.FK__TS_HoursD__TS_Us__164452B1">
             <End Role="TS_User" EntitySet="TS_User" />
             <End Role="TS_HoursDay" EntitySet="TS_HoursDay" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TS_UserProject_TS_Project" Association="TimesheetModel.FK_TS_UserProject_TS_Project">
+            <End Role="TS_Project" EntitySet="TS_Project" />
+            <End Role="TS_UserProject" EntitySet="TS_UserProject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TS_UserProject_TS_User" Association="TimesheetModel.FK_TS_UserProject_TS_User">
+            <End Role="TS_User" EntitySet="TS_User" />
+            <End Role="TS_UserProject" EntitySet="TS_UserProject" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="TS_Client">
@@ -138,6 +223,7 @@
           <Property Name="KmToOffice" Type="Int32" />
           <Property Name="AppOwner" Type="Boolean" />
           <NavigationProperty Name="TS_HoursDay" Relationship="TimesheetModel.FK__TS_HoursD__TS_Cl__173876EA" FromRole="TS_Client" ToRole="TS_HoursDay" />
+          <NavigationProperty Name="TS_Project" Relationship="TimesheetModel.FK_TS_Project_TS_Client" FromRole="TS_Client" ToRole="TS_Project" />
         </EntityType>
         <EntityType Name="TS_HoursDay">
           <Key>
@@ -162,11 +248,24 @@
           <Property Name="Name" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="TS_HoursDay" Relationship="TimesheetModel.FK__TS_HoursD__TS_Ho__182C9B23" FromRole="TS_HoursKind" ToRole="TS_HoursDay" />
         </EntityType>
+        <EntityType Name="TS_Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="70" Unicode="false" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="Client" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="TS_Client" Relationship="TimesheetModel.FK_TS_Project_TS_Client" FromRole="TS_Project" ToRole="TS_Client" />
+          <NavigationProperty Name="TS_UserProject" Relationship="TimesheetModel.FK_TS_UserProject_TS_Project" FromRole="TS_Project" ToRole="TS_UserProject" />
+        </EntityType>
         <EntityType Name="TS_User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
           <Property Name="Email" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
           <Property Name="Pass" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
@@ -175,6 +274,19 @@
           <Property Name="AccessType" Type="Int32" />
           <Property Name="HoursDay" Type="Int32" />
           <NavigationProperty Name="TS_HoursDay" Relationship="TimesheetModel.FK__TS_HoursD__TS_Us__164452B1" FromRole="TS_User" ToRole="TS_HoursDay" />
+          <NavigationProperty Name="TS_UserProject" Relationship="TimesheetModel.FK_TS_UserProject_TS_User" FromRole="TS_User" ToRole="TS_UserProject" />
+        </EntityType>
+        <EntityType Name="TS_UserProject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Project" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="TS_Project" Relationship="TimesheetModel.FK_TS_UserProject_TS_Project" FromRole="TS_UserProject" ToRole="TS_Project" />
+          <NavigationProperty Name="TS_User" Relationship="TimesheetModel.FK_TS_UserProject_TS_User" FromRole="TS_UserProject" ToRole="TS_User" />
         </EntityType>
         <Association Name="FK__TS_HoursD__TS_Cl__173876EA">
           <End Role="TS_Client" Type="TimesheetModel.TS_Client" Multiplicity="1" />
@@ -185,6 +297,18 @@
             </Principal>
             <Dependent Role="TS_HoursDay">
               <PropertyRef Name="TS_Client_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TS_Project_TS_Client">
+          <End Role="TS_Client" Type="TimesheetModel.TS_Client" Multiplicity="1" />
+          <End Role="TS_Project" Type="TimesheetModel.TS_Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TS_Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TS_Project">
+              <PropertyRef Name="Client" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -209,6 +333,30 @@
             </Principal>
             <Dependent Role="TS_HoursDay">
               <PropertyRef Name="TS_User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TS_UserProject_TS_Project">
+          <End Role="TS_Project" Type="TimesheetModel.TS_Project" Multiplicity="1" />
+          <End Role="TS_UserProject" Type="TimesheetModel.TS_UserProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TS_Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TS_UserProject">
+              <PropertyRef Name="Project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TS_UserProject_TS_User">
+          <End Role="TS_User" Type="TimesheetModel.TS_User" Multiplicity="1" />
+          <End Role="TS_UserProject" Type="TimesheetModel.TS_UserProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TS_User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TS_UserProject">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -252,6 +400,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TS_Project">
+            <EntityTypeMapping TypeName="TimesheetModel.TS_Project">
+              <MappingFragment StoreEntitySet="TS_Project">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Client" ColumnName="Client" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TS_User">
             <EntityTypeMapping TypeName="TimesheetModel.TS_User">
               <MappingFragment StoreEntitySet="TS_User">
@@ -263,6 +423,17 @@
                 <ScalarProperty Name="Mobile" ColumnName="Mobile" />
                 <ScalarProperty Name="AccessType" ColumnName="AccessType" />
                 <ScalarProperty Name="HoursDay" ColumnName="HoursDay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TS_UserProject">
+            <EntityTypeMapping TypeName="TimesheetModel.TS_UserProject">
+              <MappingFragment StoreEntitySet="TS_UserProject">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Project" ColumnName="Project" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

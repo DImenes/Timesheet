@@ -17,6 +17,7 @@ namespace TimesheetApp.Models
         public TS_Client()
         {
             this.TS_HoursDay = new HashSet<TS_HoursDay>();
+            this.TS_Project = new HashSet<TS_Project>();
         }
     
         public int Id { get; set; }
@@ -28,5 +29,6 @@ namespace TimesheetApp.Models
         public Nullable<bool> AppOwner { get; set; }
     
         public virtual ICollection<TS_HoursDay> TS_HoursDay { get; set; }
+        public virtual ICollection<TS_Project> TS_Project { get; set; }
     }
 }

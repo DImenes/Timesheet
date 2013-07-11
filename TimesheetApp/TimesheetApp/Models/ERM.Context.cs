@@ -28,6 +28,8 @@ namespace TimesheetApp.Models
         public DbSet<TS_Client> TS_Client { get; set; }
         public DbSet<TS_HoursDay> TS_HoursDay { get; set; }
         public DbSet<TS_HoursKind> TS_HoursKind { get; set; }
+        public DbSet<TS_Project> TS_Project { get; set; }
         public DbSet<TS_User> TS_User { get; set; }
+        public DbSet<TS_UserProject> TS_UserProject { get; set; }
     }
 }
