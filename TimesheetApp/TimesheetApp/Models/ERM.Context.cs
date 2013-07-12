@@ -31,5 +31,6 @@ namespace TimesheetApp.Models
         public DbSet<TS_Project> TS_Project { get; set; }
         public DbSet<TS_User> TS_User { get; set; }
         public DbSet<TS_UserProject> TS_UserProject { get; set; }
+        public DbSet<TS_Holiday> TS_Holiday { get; set; }
     }
 }

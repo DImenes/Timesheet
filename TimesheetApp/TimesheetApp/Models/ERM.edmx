@@ -4,9 +4,10 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TimesheetModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TimesheetModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="TimesheetModelStoreContainer">
           <EntitySet Name="TS_Client" EntityType="TimesheetModel.Store.TS_Client" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TS_Holiday" EntityType="TimesheetModel.Store.TS_Holiday" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="TS_HoursDay" EntityType="TimesheetModel.Store.TS_HoursDay" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="TS_HoursKind" EntityType="TimesheetModel.Store.TS_HoursKind" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="TS_Project" EntityType="TimesheetModel.Store.TS_Project" store:Type="Tables" Schema="dbo" />
@@ -48,6 +49,14 @@
           <Property Name="Country" Type="char" MaxLength="40" />
           <Property Name="KmToOffice" Type="int" />
           <Property Name="AppOwner" Type="bit" />
+        </EntityType>
+        <EntityType Name="TS_Holiday">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="varchar" Nullable="false" MaxLength="70" />
+          <Property Name="CelebrationDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="TS_HoursDay">
           <Key>
@@ -174,8 +183,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TimesheetModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -210,6 +218,7 @@
             <End Role="TS_User" EntitySet="TS_User" />
             <End Role="TS_UserProject" EntitySet="TS_UserProject" />
           </AssociationSet>
+          <EntitySet Name="TS_Holiday" EntityType="TimesheetModel.TS_Holiday" />
         </EntityContainer>
         <EntityType Name="TS_Client">
           <Key>
@@ -360,6 +369,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TS_Holiday">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CelebrationDate" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -434,6 +451,15 @@
                 <ScalarProperty Name="Project" ColumnName="Project" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TS_Holiday">
+            <EntityTypeMapping TypeName="TimesheetModel.TS_Holiday">
+              <MappingFragment StoreEntitySet="TS_Holiday">
+                <ScalarProperty Name="CelebrationDate" ColumnName="CelebrationDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
